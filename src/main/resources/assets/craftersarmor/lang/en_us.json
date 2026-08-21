@@ -1,5 +1,18 @@
 {
-  "itemGroup.craftersarmor": "Example Mod Tab",
-  "block.craftersarmor.example_block": "Example Block",
-  "item.craftersarmor.example_item": "Example Item"
+  "item.craftersarmor.lider_coat": "Leader Coat",
+
+  "item.craftersarmor.clan_taka": "Taka Clan Coat",
+
+  "item.craftersarmor.clan_guerreroscelestiales": "Celestial Warriors of the Abyss Coat",
+
+  "item.craftersarmor.clan_tsuki": "Tsuki Clan Coat",
+
+  "item.craftersarmor.clan_arcanummistery": "Arcanum Mistery Clan Coat",
+
+  "creativetab.craftersarmor.crafters_armor": "Crafters Armor",
+
+  "item.craftersarmor.clan_taka_gorra": "Taka Clan Cap",
+  "item.craftersarmor.clan_guerreroscelestiales_gorra": "Celestial Warriors of the Abyss Cap",
+  "item.craftersarmor.clan_tsuki_gorra": "Tsuki Clan Cap",
+  "item.craftersarmor.clan_arcanummistery_gorra": "Arcanum Mistery Clan Cap"
 }
