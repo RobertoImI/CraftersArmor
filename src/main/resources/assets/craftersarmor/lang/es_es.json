@@ -1,5 +1,6 @@
 {
   "item.craftersarmor.lider_coat": "Gabardina de Líder",
+  "item.craftersarmor.lider_crown": "Corona del Líder",
   "item.craftersarmor.clan_taka": "Gabardina Clan Taka",
   "item.craftersarmor.clan_guerreroscelestiales": "Gabardina Guerreros Celestiales del Abismo",
   "item.craftersarmor.clan_tsuki": "Gabardina Clan Tsuki",
@@ -8,5 +9,13 @@
   "item.craftersarmor.clan_taka_gorra": "Gorra Clan Taka",
   "item.craftersarmor.clan_guerreroscelestiales_gorra": "Gorra Guerreros Celestiales del Abismo",
   "item.craftersarmor.clan_tsuki_gorra": "Gorra Clan Tsuki",
-  "item.craftersarmor.clan_arcanummistery_gorra": "Gorra Arcanum Mistery"
+  "item.craftersarmor.clan_arcanummistery_gorra": "Gorra Arcanum Mistery",
+  "item.craftersarmor.clan_taka_s1": "Clan Taka Gabardina Estilo 1",
+  "item.craftersarmor.clan_taka_s2": "Clan Taka Gabardina Estilo 2",
+  "item.craftersarmor.clan_guerreroscelestiales_s1": "Guerreros Celestiales del Abismo Gabardina Estilo 1",
+  "item.craftersarmor.clan_guerreroscelestiales_s2": "Guerreros Celestiales del Abismo Gabardina Estilo 2",
+  "item.craftersarmor.clan_tsuki_s1": "Clan Tsuki Gabardina Estilo 1",
+  "item.craftersarmor.clan_tsuki_s2": "Clan Tsuki Gabardina Estilo 2",
+  "item.craftersarmor.clan_arcanummistery_s1": "Arcanum Mistery Gabardina Estilo 1",
+  "item.craftersarmor.clan_arcanummistery_s2": "Arcanum Mistery Gabardina Estilo 2"
 }

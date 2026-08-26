@@ -14,6 +14,8 @@ import org.crafterscr.craftersarmor.item.LiderCoatItem;
 
 import org.crafterscr.craftersarmor.item.ClanHatItem;
 
+import org.crafterscr.craftersarmor.item.LiderCrownItem;
+
 public final class ModItems {
 
     public static final DeferredRegister.Items ITEMS =
@@ -174,9 +176,119 @@ public final class ModItems {
                     )
             );
 
+    // =========================================================
+// VARIANTES S1
+// =========================================================
+
+    public static final DeferredItem<ClanCoatItem> CLAN_TAKA_S1 =
+            ITEMS.register(
+                    "clan_taka_s1",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_taka_s1"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> CLAN_GUERREROS_CELESTIALES_S1 =
+            ITEMS.register(
+                    "clan_guerreroscelestiales_s1",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_guerreroscelestiales_s1"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> CLAN_TSUKI_S1 =
+            ITEMS.register(
+                    "clan_tsuki_s1",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_tsuki_s1"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> CLAN_ARCANUM_MISTERY_S1 =
+            ITEMS.register(
+                    "clan_arcanummistery_s1",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_arcanummistery_s1"
+                    )
+            );
+
+// =========================================================
+// VARIANTES S2
+// =========================================================
+
+    public static final DeferredItem<ClanCoatItem> CLAN_TAKA_S2 =
+            ITEMS.register(
+                    "clan_taka_s2",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_taka_s2"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> CLAN_GUERREROS_CELESTIALES_S2 =
+            ITEMS.register(
+                    "clan_guerreroscelestiales_s2",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_guerreroscelestiales_s2"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> CLAN_TSUKI_S2 =
+            ITEMS.register(
+                    "clan_tsuki_s2",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_tsuki_s2"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> CLAN_ARCANUM_MISTERY_S2 =
+            ITEMS.register(
+                    "clan_arcanummistery_s2",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "clan_arcanummistery_s2"
+                    )
+            );
 
     private ModItems() {
     }
+
+    // =========================================================
+// CORONA DEL LÍDER
+// =========================================================
+
+    public static final DeferredItem<LiderCrownItem> LIDER_CROWN =
+            ITEMS.register(
+                    "lider_crown",
+                    () -> new LiderCrownItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.HELMET,
+                            new Item.Properties()
+                                    .stacksTo(1)
+                    )
+            );
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

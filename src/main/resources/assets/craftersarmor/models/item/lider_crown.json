@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "craftersarmor:item/corona_lider_icon"
+  }
+}

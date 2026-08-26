@@ -1,18 +1,21 @@
 {
   "item.craftersarmor.lider_coat": "Leader Coat",
-
+  "item.craftersarmor.lider_crown": "Leader Crown",
   "item.craftersarmor.clan_taka": "Taka Clan Coat",
-
   "item.craftersarmor.clan_guerreroscelestiales": "Celestial Warriors of the Abyss Coat",
-
   "item.craftersarmor.clan_tsuki": "Tsuki Clan Coat",
-
   "item.craftersarmor.clan_arcanummistery": "Arcanum Mistery Clan Coat",
-
   "creativetab.craftersarmor.crafters_armor": "Crafters Armor",
-
   "item.craftersarmor.clan_taka_gorra": "Taka Clan Cap",
   "item.craftersarmor.clan_guerreroscelestiales_gorra": "Celestial Warriors of the Abyss Cap",
   "item.craftersarmor.clan_tsuki_gorra": "Tsuki Clan Cap",
-  "item.craftersarmor.clan_arcanummistery_gorra": "Arcanum Mistery Clan Cap"
+  "item.craftersarmor.clan_arcanummistery_gorra": "Arcanum Mistery Clan Cap",
+  "item.craftersarmor.clan_taka_s1": "Taka Clan Coat Style 1",
+  "item.craftersarmor.clan_taka_s2": "Taka Clan Coat Style 2",
+  "item.craftersarmor.clan_guerreroscelestiales_s1": "Celestial Warriors of the Abyss Coat Style 1",
+  "item.craftersarmor.clan_guerreroscelestiales_s2": "Celestial Warriors of the Abyss Coat Style 2",
+  "item.craftersarmor.clan_tsuki_s1": "Tsuki Clan Coat Style 1",
+  "item.craftersarmor.clan_tsuki_s2": "Tsuki Clan Coat Style 2",
+  "item.craftersarmor.clan_arcanummistery_s1": "Arcanum Mistery Coat Style 1",
+  "item.craftersarmor.clan_arcanummistery_s2": "Arcanum Mistery Coat Style 2"
 }

@@ -34,25 +34,43 @@ public final class ModCreativeTabs {
                             )
                             .displayItems((parameters, output) -> {
 
+                                // Líder
                                 output.accept(ModItems.LIDER_COAT.get());
+                                output.accept(ModItems.LIDER_CROWN.get());
 
+                                // =====================================================
+                                // CLAN TAKA
+                                // =====================================================
                                 output.accept(ModItems.CLAN_TAKA.get());
+                                output.accept(ModItems.CLAN_TAKA_S1.get());
+                                output.accept(ModItems.CLAN_TAKA_S2.get());
 
-                                output.accept(
-                                        ModItems.CLAN_GUERREROS_CELESTIALES.get()
-                                );
+                                // =====================================================
+                                // GUERREROS CELESTIALES DEL ABISMO
+                                // =====================================================
+                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES.get());
+                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_S1.get());
+                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_S2.get());
 
+                                // =====================================================
+                                // CLAN TSUKI
+                                // =====================================================
                                 output.accept(ModItems.CLAN_TSUKI.get());
+                                output.accept(ModItems.CLAN_TSUKI_S1.get());
+                                output.accept(ModItems.CLAN_TSUKI_S2.get());
 
-                                output.accept(
-                                        ModItems.CLAN_ARCANUM_MISTERY.get()
-                                );
+                                // =====================================================
+                                // CLAN ARCANUM MISTERY
+                                // =====================================================
+                                output.accept(ModItems.CLAN_ARCANUM_MISTERY.get());
+                                output.accept(ModItems.CLAN_ARCANUM_MISTERY_S1.get());
+                                output.accept(ModItems.CLAN_ARCANUM_MISTERY_S2.get());
 
+                                // Gorras
                                 output.accept(ModItems.CLAN_TAKA_GORRA.get());
                                 output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_GORRA.get());
                                 output.accept(ModItems.CLAN_TSUKI_GORRA.get());
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY_GORRA.get());
-
                             })
                             .build()
             );
