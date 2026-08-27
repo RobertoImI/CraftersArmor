@@ -16,6 +16,8 @@ import org.crafterscr.craftersarmor.item.ClanHatItem;
 
 import org.crafterscr.craftersarmor.item.LiderCrownItem;
 
+import org.crafterscr.craftersarmor.item.ClanShoesItem;
+
 public final class ModItems {
 
     public static final DeferredRegister.Items ITEMS =
@@ -287,6 +289,71 @@ public final class ModItems {
                             ArmorItem.Type.HELMET,
                             new Item.Properties()
                                     .stacksTo(1)
+                    )
+            );
+
+    // =========================================================
+// ZAPATOS - CLAN TAKA
+// =========================================================
+
+    public static final DeferredItem<ClanShoesItem> CLAN_TAKA_ZAPATOS =
+            ITEMS.register(
+                    "clan_taka_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "clan_taka_zapatos"
+                    )
+            );
+
+
+// =========================================================
+// ZAPATOS - GUERREROS CELESTIALES DEL ABISMO
+// =========================================================
+
+    public static final DeferredItem<ClanShoesItem>
+            CLAN_GUERREROS_CELESTIALES_ZAPATOS =
+            ITEMS.register(
+                    "clan_guerreroscelestiales_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "clan_guerreroscelestiales_zapatos"
+                    )
+            );
+
+
+// =========================================================
+// ZAPATOS - CLAN TSUKI
+// =========================================================
+
+    public static final DeferredItem<ClanShoesItem> CLAN_TSUKI_ZAPATOS =
+            ITEMS.register(
+                    "clan_tsuki_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "clan_tsuki_zapatos"
+                    )
+            );
+
+
+// =========================================================
+// ZAPATOS - ARCANUM MISTERY
+// =========================================================
+
+    public static final DeferredItem<ClanShoesItem>
+            CLAN_ARCANUM_MISTERY_ZAPATOS =
+            ITEMS.register(
+                    "clan_arcanummistery_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "clan_arcanummistery_zapatos"
                     )
             );
 

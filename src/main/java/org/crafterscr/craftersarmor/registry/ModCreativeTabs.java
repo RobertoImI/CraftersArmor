@@ -71,6 +71,12 @@ public final class ModCreativeTabs {
                                 output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_GORRA.get());
                                 output.accept(ModItems.CLAN_TSUKI_GORRA.get());
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY_GORRA.get());
+
+                                // Zapatos
+                                output.accept(ModItems.CLAN_TAKA_ZAPATOS.get());
+                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_ZAPATOS.get());
+                                output.accept(ModItems.CLAN_TSUKI_ZAPATOS.get());
+                                output.accept(ModItems.CLAN_ARCANUM_MISTERY_ZAPATOS.get());
                             })
                             .build()
             );
