@@ -8,7 +8,7 @@ import org.crafterscr.craftersarmor.item.LiderCoatItem;
 import software.bernie.geckolib.model.GeoModel;
 
 public final class LiderCoatRenderer
-        extends DynamicCoatArmorRenderer<LiderCoatItem> {
+        extends LiveDynamicCoatArmorRenderer<LiderCoatItem> {
 
     public LiderCoatRenderer() {
         super(new LiderCoatModel());
