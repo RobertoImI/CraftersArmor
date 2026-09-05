@@ -6,10 +6,9 @@ import org.crafterscr.craftersarmor.CraftersArmor;
 import org.crafterscr.craftersarmor.item.ClanCoatItem;
 
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public final class ClanCoatRenderer
-        extends GeoArmorRenderer<ClanCoatItem> {
+        extends DynamicCoatArmorRenderer<ClanCoatItem> {
 
     public ClanCoatRenderer() {
         super(new ClanCoatModel());
