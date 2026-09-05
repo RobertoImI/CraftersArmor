@@ -16,5 +16,5 @@ jobs:
           java-version: '21'
       - name: Make Gradle executable
         run: chmod +x gradlew
-      - name: Build
+      - name: Build current dynamic armor branch
         run: ./gradlew clean build --stacktrace
