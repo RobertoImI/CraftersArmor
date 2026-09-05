@@ -6,10 +6,9 @@ import org.crafterscr.craftersarmor.CraftersArmor;
 import org.crafterscr.craftersarmor.item.LiderCoatItem;
 
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public final class LiderCoatRenderer
-        extends GeoArmorRenderer<LiderCoatItem> {
+        extends DynamicCoatArmorRenderer<LiderCoatItem> {
 
     public LiderCoatRenderer() {
         super(new LiderCoatModel());
