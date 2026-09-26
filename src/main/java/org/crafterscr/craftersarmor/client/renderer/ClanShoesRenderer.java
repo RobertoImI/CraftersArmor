@@ -9,7 +9,7 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public final class ClanShoesRenderer
-        extends GeoArmorRenderer<ClanShoesItem> {
+        extends EmoteCompatibleArmorRenderer<ClanShoesItem> {
 
     public ClanShoesRenderer() {
         super(new ClanShoesModel());

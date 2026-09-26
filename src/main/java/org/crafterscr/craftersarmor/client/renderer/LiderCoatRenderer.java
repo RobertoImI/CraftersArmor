@@ -9,7 +9,7 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public final class LiderCoatRenderer
-        extends GeoArmorRenderer<LiderCoatItem> {
+        extends EmoteCompatibleArmorRenderer<LiderCoatItem> {
 
     public LiderCoatRenderer() {
         super(new LiderCoatModel());
