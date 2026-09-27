@@ -2,6 +2,9 @@ package org.crafterscr.craftersarmor.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -25,6 +28,7 @@ import software.bernie.geckolib.renderer.GeoArmorRenderer;
 import software.bernie.geckolib.util.RenderUtil;
 
 import java.util.Map;
+import java.util.Arrays;
 import java.util.WeakHashMap;
 
 /**
@@ -43,18 +47,10 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
     private static final float BEND_EPSILON = 1.0E-4F;
     private static final int MAX_SUBDIVISIONS = 16;
 
-    /**
-     * Small render-only correction for GeckoLib coat sleeves while an
-     * Emotecraft / Player Animator animation is active.
-     *
-     * <p>The widened coat sleeves are centered correctly in the normal pose,
-     * but during animated arm transforms they sit a fraction of a pixel too
-     * far away from the shoulder. Pull each sleeve 0.35 model pixels inward
-     * without modifying the source geo model.</p>
-     */
-    private static final float EMOTE_ARM_INSET_PIXELS = 0.35F;
-    private static final float EMOTE_SLEEVE_DEPTH_SCALE = 1.08F;
-    private static final float VANILLA_ARM_HEIGHT = 12.0F / PIXELS_PER_BLOCK;
+    // Preserve authored pivots outside animations, including shared renderer reuse.
+    private final Map<GeoBone, Vec3> sleevePivots = new WeakHashMap<>();
+    private BendBounds rightArmBounds;
+    private BendBounds leftArmBounds;
 
     private final Map<GeoBone, BendBounds> bendBoundsCache =
             new WeakHashMap<>();
@@ -63,6 +59,23 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
 
     protected EmoteCompatibleArmorRenderer(GeoModel<T> model) {
         super(model);
+    }
+
+    @Override
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer,
+                               int packedLight, int packedOverlay, int colour) {
+        try {
+            super.renderToBuffer(poseStack, buffer, packedLight, packedOverlay, colour);
+        }
+        finally {
+            // Baked bones may be shared by different item renderers. Never
+            // leave an emote pivot behind for another player or coat variant.
+            this.sleevePivots.forEach((bone, pivot) -> bone.updatePivot(
+                    (float)pivot.x, (float)pivot.y, (float)pivot.z));
+            this.rightArmBounds = null;
+            this.leftArmBounds = null;
+            this.activeBendContext = null;
+        }
     }
 
     @Override
@@ -78,33 +91,64 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         copyScale(baseModel.rightLeg, this.rightBoot);
         copyScale(baseModel.leftLeg, this.leftBoot);
 
-        if (PlayerAnimatorCompat.isActive(this.currentEntity)) {
-            applyEmoteSleeveAlignment();
+        boolean animated = PlayerAnimatorCompat.isActive(this.currentEntity);
+        alignSleevePivot(this.rightArm, 5.0F, animated);
+        alignSleevePivot(this.leftArm, -5.0F, animated);
+        HumanoidModel<?> armModel = baseModel;
+        if (animated && this.currentEntity instanceof AbstractClientPlayer player
+                && Minecraft.getInstance().getEntityRenderDispatcher()
+                        .getRenderer(player) instanceof PlayerRenderer playerRenderer) {
+            // GeckoLib receives the armor-layer model, whose cubes are always
+            // classic. Use the player's actual model for slim arm geometry.
+            armModel = playerRenderer.getModel();
+        }
+        this.rightArmBounds = animated ? armBounds(armModel.rightArm, -5.0F) : null;
+        this.leftArmBounds = animated ? armBounds(armModel.leftArm, 5.0F) : null;
+    }
+
+    private void alignSleevePivot(GeoBone bone, float geoPivotX, boolean animated) {
+        if (bone == null) {
+            return;
+        }
+
+        Vec3 original = this.sleevePivots.computeIfAbsent(bone,
+                key -> new Vec3(key.getPivotX(), key.getPivotY(), key.getPivotZ()));
+        if (animated) {
+            // GeoArmorRenderer's arm translations assume this bind-pose pivot.
+            // Changing the rotation center leaves the authored vertices/UVs intact.
+            bone.updatePivot(geoPivotX, 22.0F, 0.0F);
+        }
+        else {
+            bone.updatePivot((float)original.x, (float)original.y, (float)original.z);
         }
     }
 
-    private void applyEmoteSleeveAlignment() {
-        if (this.rightArm != null) {
-            this.rightArm.setPosX(
-                    this.rightArm.getPosX()
-                            + EMOTE_ARM_INSET_PIXELS
-            );
-            this.rightArm.setScaleZ(
-                    this.rightArm.getScaleZ()
-                            * EMOTE_SLEEVE_DEPTH_SCALE
-            );
-        }
-
-        if (this.leftArm != null) {
-            this.leftArm.setPosX(
-                    this.leftArm.getPosX()
-                            - EMOTE_ARM_INSET_PIXELS
-            );
-            this.leftArm.setScaleZ(
-                    this.leftArm.getScaleZ()
-                            * EMOTE_SLEEVE_DEPTH_SCALE
-            );
-        }
+    private static BendBounds armBounds(ModelPart arm, float bindX) {
+        BendBounds[] result = {null};
+        float[] largestVolume = {-1.0F};
+        // Visit avoids access to ModelPart's private cube list. Only the arm's
+        // own cube is relevant; accessories attached as children are excluded.
+        arm.visit(new PoseStack(), (pose, path, index, cube) -> {
+            if (!path.isEmpty()) {
+                return;
+            }
+            float volume = (cube.maxX - cube.minX) * (cube.maxY - cube.minY)
+                    * (cube.maxZ - cube.minZ);
+            if (volume > largestVolume[0]) {
+                largestVolume[0] = volume;
+                // Cube coordinates are local to the shoulder. Convert to the
+                // same undeformed model space as geoToVanillaRaw, not animated
+                // world coordinates. The actual cube also handles slim skins.
+                result[0] = new BendBounds(
+                        (bindX + cube.minX) / PIXELS_PER_BLOCK,
+                        (2.0F + cube.minY) / PIXELS_PER_BLOCK,
+                        cube.minZ / PIXELS_PER_BLOCK,
+                        (bindX + cube.maxX) / PIXELS_PER_BLOCK,
+                        (2.0F + cube.maxY) / PIXELS_PER_BLOCK,
+                        cube.maxZ / PIXELS_PER_BLOCK);
+            }
+        });
+        return result[0];
     }
 
     private static void copyScale(ModelPart source, GeoBone target) {
@@ -335,61 +379,15 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         return null;
     }
 
-    /**
-     * Player Animator / Bendy-lib bends the vanilla arm using its full
-     * 4x12x4 cuboid. CraftersArmor's visible coat sleeve is intentionally
-     * shorter (about 10.25 px), so using the sleeve's own bounds places its
-     * bend center too high and makes the player arm poke through during strong
-     * emotes.
-     *
-     * <p>Keep the actual sleeve vertices and thickness unchanged, but calculate
-     * their deformation from a virtual 12 px-high arm frame. This makes the
-     * sleeve and the underlying vanilla arm share the same elbow center and
-     * bend radius.</p>
-     */
     private BendContext createArmBendContext(
             GeoBone bone,
             PlayerAnimatorCompat.Bend bend
     ) {
-        if (!bend.isActive()) {
-            return null;
-        }
-
-        BendBounds sleeveBounds = findPrimaryCubeBounds(bone);
-
-        if (sleeveBounds == null) {
-            return null;
-        }
-
-        BendBounds vanillaArmBounds =
-                createVirtualVanillaArmBounds(sleeveBounds);
-
-        return new BendContext(
-                bend,
-                Direction.UP,
-                vanillaArmBounds
-        );
-    }
-
-    private static BendBounds createVirtualVanillaArmBounds(
-            BendBounds sleeveBounds
-    ) {
-        /*
-         * In the GeoArmorRenderer model space used by geoToVanillaRaw(),
-         * the classic/slim vanilla arm runs from Y=0 to Y=12 px.
-         *
-         * X/Z only need to preserve the sleeve's center because Bendy-lib's
-         * Direction.UP bend uses Y for the base/other planes. Keeping the
-         * sleeve center also preserves the coat's slightly inflated width.
-         */
-        return new BendBounds(
-                sleeveBounds.minX(),
-                0.0F,
-                sleeveBounds.minZ(),
-                sleeveBounds.maxX(),
-                VANILLA_ARM_HEIGHT,
-                sleeveBounds.maxZ()
-        );
+        BendBounds bounds = bone == this.rightArm
+                ? this.rightArmBounds : this.leftArmBounds;
+        return bend.isActive() && bounds != null
+                ? new BendContext(bend, Direction.UP, bounds)
+                : null;
     }
 
     private BendContext createBoundedContext(
@@ -587,15 +585,10 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
     ) {
         GeoVertex[] vertices = quad.vertices();
 
-        int stepsS = subdivisionCount(
-                vertices[0].position(),
-                vertices[1].position()
-        );
-
-        int stepsT = subdivisionCount(
-                vertices[0].position(),
-                vertices[3].position()
-        );
+        float[] samplesS = subdivisionSamples(
+                vertices[0].position(), vertices[1].position(), context);
+        float[] samplesT = subdivisionSamples(
+                vertices[0].position(), vertices[3].position(), context);
 
         Matrix4f poseMatrix =
                 new Matrix4f(
@@ -605,13 +598,13 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         Matrix3f normalMatrix =
                 poseStack.last().normal();
 
-        for (int y = 0; y < stepsT; y++) {
-            float t0 = y / (float)stepsT;
-            float t1 = (y + 1) / (float)stepsT;
+        for (int y = 0; y < samplesT.length - 1; y++) {
+            float t0 = samplesT[y];
+            float t1 = samplesT[y + 1];
 
-            for (int x = 0; x < stepsS; x++) {
-                float s0 = x / (float)stepsS;
-                float s1 = (x + 1) / (float)stepsS;
+            for (int x = 0; x < samplesS.length - 1; x++) {
+                float s0 = samplesS[x];
+                float s1 = samplesS[x + 1];
 
                 Sample p00 = deform(
                         sample(vertices, s0, t0),
@@ -699,6 +692,37 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
                 );
             }
         }
+    }
+
+    private static float[] subdivisionSamples(
+            Vector3f a, Vector3f b, BendContext context
+    ) {
+        int steps = subdivisionCount(a, b);
+        float[] samples = new float[steps + 2];
+        for (int i = 0; i <= steps; i++) {
+            samples[i] = i / (float)steps;
+        }
+        int count = steps + 1;
+        // A face crossing the elbow must have an edge at the bend plane.
+        // Otherwise a quad bridges both branches of the deformation and cuts
+        // through the bent arm, even when its vertices use the correct math.
+        float deltaY = b.y - a.y;
+        if (Math.abs(deltaY) > 1.0E-6F) {
+            float elbowY = GEO_MODEL_HEIGHT - context.bounds().center().y;
+            float split = (elbowY - a.y) / deltaY;
+            if (split > 1.0E-6F && split < 1.0F - 1.0E-6F) {
+                boolean exists = false;
+                for (int i = 0; i < count; i++) {
+                    exists |= Math.abs(samples[i] - split) < 1.0E-6F;
+                }
+                if (!exists) {
+                    samples[count++] = split;
+                }
+            }
+        }
+        samples = Arrays.copyOf(samples, count);
+        Arrays.sort(samples);
+        return samples;
     }
 
     private static int subdivisionCount(
