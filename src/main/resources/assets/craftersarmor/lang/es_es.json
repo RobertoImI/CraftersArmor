@@ -1,6 +1,6 @@
 {
-  "item.craftersarmor.lider_coat": "Líder Gabardina",
-  "item.craftersarmor.lider_crown": "Líder Corona",
+  "item.craftersarmor.lider_coat": "Campeón Gabardina",
+  "item.craftersarmor.lider_crown": "Campeón Corona",
   "item.craftersarmor.clan_taka": "Clan Taka Gabardina",
   "item.craftersarmor.clan_guerreroscelestiales": "Guerreros Celestiales del Abismo Gabardina",
   "item.craftersarmor.clan_tsuki": "Clan Tsuki Gabardina",
@@ -37,5 +37,6 @@
   "item.craftersarmor.gym_siniestro": "Gimnasio Siniestro Gabardina",
   "item.craftersarmor.gym_siniestro_zapatos": "Gimnasio Siniestro Zapatos",
   "item.craftersarmor.gym_dragon": "Gimnasio Dragón Gabardina",
-  "item.craftersarmor.gym_dragon_zapatos": "Gimnasio Dragón Zapatos"
+  "item.craftersarmor.gym_dragon_zapatos": "Gimnasio Dragón Zapatos",
+  "item.craftersarmor.lider_zapatos": "Campeón Zapatos"
 }

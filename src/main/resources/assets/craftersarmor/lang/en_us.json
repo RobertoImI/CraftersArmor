@@ -1,6 +1,6 @@
 {
-  "item.craftersarmor.lider_coat": "Leader Coat",
-  "item.craftersarmor.lider_crown": "Leader Crown",
+  "item.craftersarmor.lider_coat": "Champion Coat",
+  "item.craftersarmor.lider_crown": "Champion Crown",
   "item.craftersarmor.clan_taka": "Taka Clan Coat",
   "item.craftersarmor.clan_guerreroscelestiales": "Celestial Warriors of the Abyss Coat",
   "item.craftersarmor.clan_tsuki": "Tsuki Clan Coat",
@@ -37,5 +37,6 @@
   "item.craftersarmor.gym_siniestro": "Dark Gym Coat",
   "item.craftersarmor.gym_siniestro_zapatos": "Dark Gym Shoes",
   "item.craftersarmor.gym_dragon": "Dragon Gym Coat",
-  "item.craftersarmor.gym_dragon_zapatos": "Dragon Gym Shoes"
+  "item.craftersarmor.gym_dragon_zapatos": "Dragon Gym Shoes",
+  "item.craftersarmor.lider_zapatos": "Champion Shoes"
 }

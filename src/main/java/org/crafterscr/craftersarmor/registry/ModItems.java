@@ -25,7 +25,7 @@ public final class ModItems {
 
 
     // =========================================================
-    // LÍDER
+    // CAMPEÓN
     // =========================================================
 
     public static final DeferredItem<LiderCoatItem> LIDER_COAT =
@@ -36,6 +36,17 @@ public final class ModItems {
                             ArmorItem.Type.CHESTPLATE,
                             new Item.Properties()
                                     .stacksTo(1)
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> LIDER_ZAPATOS =
+            ITEMS.register(
+                    "lider_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "lider_zapatos"
                     )
             );
 
@@ -278,7 +289,7 @@ public final class ModItems {
     }
 
     // =========================================================
-// CORONA DEL LÍDER
+// CORONA DEL CAMPEÓN
 // =========================================================
 
     public static final DeferredItem<LiderCrownItem> LIDER_CROWN =

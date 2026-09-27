@@ -34,9 +34,10 @@ public final class ModCreativeTabs {
                             )
                             .displayItems((parameters, output) -> {
 
-                                // Líder
+                                // Campeón
                                 output.accept(ModItems.LIDER_COAT.get());
                                 output.accept(ModItems.LIDER_CROWN.get());
+                                output.accept(ModItems.LIDER_ZAPATOS.get());
 
                                 // Clan Taka
                                 output.accept(ModItems.CLAN_TAKA.get());
