@@ -84,6 +84,12 @@ public final class ModCreativeTabs {
                                 output.accept(ModItems.GYM_SINIESTRO_ZAPATOS.get());
                                 output.accept(ModItems.GYM_DRAGON.get());
                                 output.accept(ModItems.GYM_DRAGON_ZAPATOS.get());
+
+                                // Accesorios de cabeza Pokémon
+                                output.accept(ModItems.HAT_BLACK.get());
+                                output.accept(ModItems.HAT_HILBERT.get());
+                                output.accept(ModItems.HAT_MAY.get());
+                                output.accept(ModItems.HAT_SERENA.get());
                             })
                             .build()
             );
