@@ -43,6 +43,17 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
     private static final float BEND_EPSILON = 1.0E-4F;
     private static final int MAX_SUBDIVISIONS = 16;
 
+    /**
+     * Small render-only correction for GeckoLib coat sleeves while an
+     * Emotecraft / Player Animator animation is active.
+     *
+     * <p>The widened coat sleeves are centered correctly in the normal pose,
+     * but during animated arm transforms they sit a fraction of a pixel too
+     * far away from the shoulder. Pull each sleeve 0.35 model pixels inward
+     * without modifying the source geo model.</p>
+     */
+    private static final float EMOTE_ARM_INSET_PIXELS = 0.35F;
+
     private final Map<GeoBone, BendBounds> bendBoundsCache =
             new WeakHashMap<>();
 
@@ -64,6 +75,26 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         copyScale(baseModel.leftLeg, this.leftLeg);
         copyScale(baseModel.rightLeg, this.rightBoot);
         copyScale(baseModel.leftLeg, this.leftBoot);
+
+        if (PlayerAnimatorCompat.isActive(this.currentEntity)) {
+            applyEmoteSleeveAlignment();
+        }
+    }
+
+    private void applyEmoteSleeveAlignment() {
+        if (this.rightArm != null) {
+            this.rightArm.setPosX(
+                    this.rightArm.getPosX()
+                            + EMOTE_ARM_INSET_PIXELS
+            );
+        }
+
+        if (this.leftArm != null) {
+            this.leftArm.setPosX(
+                    this.leftArm.getPosX()
+                            - EMOTE_ARM_INSET_PIXELS
+            );
+        }
     }
 
     private static void copyScale(ModelPart source, GeoBone target) {
