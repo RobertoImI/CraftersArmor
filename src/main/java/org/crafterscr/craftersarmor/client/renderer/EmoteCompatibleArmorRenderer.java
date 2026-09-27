@@ -53,6 +53,7 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
      * without modifying the source geo model.</p>
      */
     private static final float EMOTE_ARM_INSET_PIXELS = 0.35F;
+    private static final float EMOTE_SLEEVE_DEPTH_SCALE = 1.08F;
     private static final float VANILLA_ARM_HEIGHT = 12.0F / PIXELS_PER_BLOCK;
 
     private final Map<GeoBone, BendBounds> bendBoundsCache =
@@ -88,12 +89,20 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
                     this.rightArm.getPosX()
                             + EMOTE_ARM_INSET_PIXELS
             );
+            this.rightArm.setScaleZ(
+                    this.rightArm.getScaleZ()
+                            * EMOTE_SLEEVE_DEPTH_SCALE
+            );
         }
 
         if (this.leftArm != null) {
             this.leftArm.setPosX(
                     this.leftArm.getPosX()
                             - EMOTE_ARM_INSET_PIXELS
+            );
+            this.leftArm.setScaleZ(
+                    this.leftArm.getScaleZ()
+                            * EMOTE_SLEEVE_DEPTH_SCALE
             );
         }
     }
