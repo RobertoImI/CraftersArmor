@@ -7,9 +7,9 @@ import org.crafterscr.craftersarmor.CraftersArmor;
 import org.crafterscr.craftersarmor.item.ClanHatItem;
 
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public final class ClanHatRenderer extends GeoArmorRenderer<ClanHatItem> {
+public final class ClanHatRenderer
+        extends EmoteCompatibleArmorRenderer<ClanHatItem> {
 
     public ClanHatRenderer() {
         super(new ClanHatModel());
@@ -19,7 +19,8 @@ public final class ClanHatRenderer extends GeoArmorRenderer<ClanHatItem> {
         // Se conserva para que ClanHatItem no necesite cambios.
     }
 
-    private static final class ClanHatModel extends GeoModel<ClanHatItem> {
+    private static final class ClanHatModel
+            extends GeoModel<ClanHatItem> {
 
         private static final ResourceLocation MODEL =
                 ResourceLocation.fromNamespaceAndPath(
@@ -28,20 +29,28 @@ public final class ClanHatRenderer extends GeoArmorRenderer<ClanHatItem> {
                 );
 
         @Override
-        public ResourceLocation getModelResource(ClanHatItem animatable) {
+        public ResourceLocation getModelResource(
+                ClanHatItem animatable
+        ) {
             return MODEL;
         }
 
         @Override
-        public ResourceLocation getTextureResource(ClanHatItem animatable) {
+        public ResourceLocation getTextureResource(
+                ClanHatItem animatable
+        ) {
             return ResourceLocation.fromNamespaceAndPath(
                     CraftersArmor.MOD_ID,
-                    "textures/armor/" + animatable.getTextureName() + ".png"
+                    "textures/armor/"
+                            + animatable.getTextureName()
+                            + ".png"
             );
         }
 
         @Override
-        public ResourceLocation getAnimationResource(ClanHatItem animatable) {
+        public ResourceLocation getAnimationResource(
+                ClanHatItem animatable
+        ) {
             return null;
         }
     }
