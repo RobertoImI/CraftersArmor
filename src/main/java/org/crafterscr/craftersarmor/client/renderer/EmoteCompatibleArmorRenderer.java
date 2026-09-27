@@ -144,19 +144,42 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
             PoseStack poseStack,
             PlayerAnimatorCompat.Bend bend
     ) {
-        float offset = 0.375F;
-        float axisAngle = -bend.axis();
+        /*
+         * Player Animator applies the upper-body bend in vanilla model space
+         * around Y = 6 px (0.375 blocks):
+         *
+         *   T(0, 6/16, 0) * R * T(0, -6/16, 0)
+         *
+         * GeoArmorRenderer is already inside GeckoLib's armor transform:
+         *
+         *   translate(0, 24/16, 0) * scale(-1, -1, 1)
+         *
+         * before renderRecursively is reached. Applying Player Animator's
+         * vanilla-space matrix directly here therefore bends the armor around
+         * the wrong point, which makes hats/crowns and shoulders visibly
+         * detach from the player.
+         *
+         * Convert the vanilla bend into GeckoLib model space instead:
+         * vanilla Y=6 maps to geo Y=24-6=18 px, and the X/Y inversion changes
+         * the rotation axis accordingly.
+         */
+        float vanillaPivotY = 0.375F;
+        float geoPivotY = GEO_MODEL_HEIGHT - vanillaPivotY;
 
-        poseStack.translate(0.0F, offset, 0.0F);
+        float vanillaAxisAngle = -bend.axis();
+        float geoAxisX = -(float)Math.cos(vanillaAxisAngle);
+        float geoAxisZ = (float)Math.sin(vanillaAxisAngle);
+
+        poseStack.translate(0.0F, geoPivotY, 0.0F);
         poseStack.mulPose(
                 new Quaternionf().rotateAxis(
                         bend.amount(),
-                        (float)Math.cos(axisAngle),
+                        geoAxisX,
                         0.0F,
-                        (float)Math.sin(axisAngle)
+                        geoAxisZ
                 )
         );
-        poseStack.translate(0.0F, -offset, 0.0F);
+        poseStack.translate(0.0F, -geoPivotY, 0.0F);
     }
 
     private static boolean isUpperBodyPart(String boneName) {
