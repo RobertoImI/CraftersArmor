@@ -7,13 +7,13 @@ import java.lang.reflect.Method;
 /**
  * Optional bridge to Player Animator, the animation library used by Emotecraft.
  *
- * <p>The bridge is reflection based on purpose: CraftersArmor keeps working when
- * Emotecraft/Player Animator is not installed and does not make either mod a
- * hard dependency.</p>
+ * <p>Reflection keeps Player Animator optional: CraftersArmor still loads
+ * normally when Emotecraft / Player Animator is not installed.</p>
  */
 public final class PlayerAnimatorCompat {
 
-    private static final Bend ZERO = new Bend(0.0F, 0.0F);
+    private static final Bend ZERO =
+            new Bend(0.0F, 0.0F);
 
     private static volatile boolean initialized;
     private static boolean available;
@@ -28,8 +28,13 @@ public final class PlayerAnimatorCompat {
     private PlayerAnimatorCompat() {
     }
 
-    public static Bend getBend(Entity entity, String partName) {
-        if (entity == null || partName == null || !ensureInitialized()) {
+    public static Bend getBend(
+            Entity entity,
+            String partName
+    ) {
+        if (entity == null
+                || partName == null
+                || !ensureInitialized()) {
             return ZERO;
         }
 
@@ -38,30 +43,66 @@ public final class PlayerAnimatorCompat {
         }
 
         try {
-            Object animation = getAnimationMethod.invoke(entity);
+            Object animation =
+                    getAnimationMethod.invoke(entity);
 
-            if (animation == null || !Boolean.TRUE.equals(isActiveMethod.invoke(animation))) {
+            if (animation == null
+                    || !Boolean.TRUE.equals(
+                            isActiveMethod.invoke(animation)
+                    )) {
                 return ZERO;
             }
 
-            Object pair = getBendMethod.invoke(animation, partName);
+            Object pair =
+                    getBendMethod.invoke(
+                            animation,
+                            partName
+                    );
 
             if (pair == null) {
                 return ZERO;
             }
 
-            Object left = getLeftMethod.invoke(pair);
-            Object right = getRightMethod.invoke(pair);
+            Object left =
+                    getLeftMethod.invoke(pair);
 
-            if (!(left instanceof Number axis) || !(right instanceof Number amount)) {
+            Object right =
+                    getRightMethod.invoke(pair);
+
+            if (!(left instanceof Number axis)
+                    || !(right instanceof Number amount)) {
                 return ZERO;
             }
 
-            return new Bend(axis.floatValue(), amount.floatValue());
+            return new Bend(
+                    axis.floatValue(),
+                    amount.floatValue()
+            );
         }
-        catch (ReflectiveOperationException | LinkageError ignored) {
+        catch (ReflectiveOperationException
+               | LinkageError ignored) {
             return ZERO;
         }
+    }
+
+    public static Bend combine(
+            Bend first,
+            Bend second
+    ) {
+        if (first == null) {
+            return second == null
+                    ? ZERO
+                    : second;
+        }
+
+        if (second == null) {
+            return first;
+        }
+
+        return new Bend(
+                first.axis + second.axis,
+                first.amount + second.amount
+        );
     }
 
     private static boolean ensureInitialized() {
@@ -75,7 +116,9 @@ public final class PlayerAnimatorCompat {
             }
 
             try {
-                ClassLoader loader = PlayerAnimatorCompat.class.getClassLoader();
+                ClassLoader loader =
+                        PlayerAnimatorCompat.class
+                                .getClassLoader();
 
                 animatedPlayerClass = Class.forName(
                         "dev.kosmx.playerAnim.impl.IAnimatedPlayer",
@@ -83,26 +126,35 @@ public final class PlayerAnimatorCompat {
                         loader
                 );
 
-                Class<?> animationApplierClass = Class.forName(
-                        "dev.kosmx.playerAnim.impl.animation.AnimationApplier",
-                        false,
-                        loader
-                );
+                Class<?> animationApplierClass =
+                        Class.forName(
+                                "dev.kosmx.playerAnim.impl.animation.AnimationApplier",
+                                false,
+                                loader
+                        );
 
-                Class<?> pairClass = Class.forName(
-                        "dev.kosmx.playerAnim.core.util.Pair",
-                        false,
-                        loader
-                );
+                Class<?> pairClass =
+                        Class.forName(
+                                "dev.kosmx.playerAnim.core.util.Pair",
+                                false,
+                                loader
+                        );
 
                 getAnimationMethod =
-                        animatedPlayerClass.getMethod("playerAnimator_getAnimation");
+                        animatedPlayerClass.getMethod(
+                                "playerAnimator_getAnimation"
+                        );
 
                 isActiveMethod =
-                        animationApplierClass.getMethod("isActive");
+                        animationApplierClass.getMethod(
+                                "isActive"
+                        );
 
                 getBendMethod =
-                        animationApplierClass.getMethod("getBend", String.class);
+                        animationApplierClass.getMethod(
+                                "getBend",
+                                String.class
+                        );
 
                 getLeftMethod =
                         pairClass.getMethod("getLeft");
@@ -112,7 +164,8 @@ public final class PlayerAnimatorCompat {
 
                 available = true;
             }
-            catch (ReflectiveOperationException | LinkageError ignored) {
+            catch (ReflectiveOperationException
+                   | LinkageError ignored) {
                 available = false;
             }
 
@@ -121,9 +174,13 @@ public final class PlayerAnimatorCompat {
         }
     }
 
-    public record Bend(float axis, float amount) {
+    public record Bend(
+            float axis,
+            float amount
+    ) {
         public boolean isActive() {
-            return Math.abs(this.amount) >= 1.0E-4F;
+            return Math.abs(this.amount)
+                    >= 1.0E-4F;
         }
     }
 }
