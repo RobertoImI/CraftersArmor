@@ -28,6 +28,30 @@ public final class PlayerAnimatorCompat {
     private PlayerAnimatorCompat() {
     }
 
+    public static boolean isActive(Entity entity) {
+        if (entity == null || !ensureInitialized()) {
+            return false;
+        }
+
+        if (!animatedPlayerClass.isInstance(entity)) {
+            return false;
+        }
+
+        try {
+            Object animation =
+                    getAnimationMethod.invoke(entity);
+
+            return animation != null
+                    && Boolean.TRUE.equals(
+                            isActiveMethod.invoke(animation)
+                    );
+        }
+        catch (ReflectiveOperationException
+               | LinkageError ignored) {
+            return false;
+        }
+    }
+
     public static Bend getBend(
             Entity entity,
             String partName
