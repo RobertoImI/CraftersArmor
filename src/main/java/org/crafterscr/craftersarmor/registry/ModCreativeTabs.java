@@ -38,45 +38,51 @@ public final class ModCreativeTabs {
                                 output.accept(ModItems.LIDER_COAT.get());
                                 output.accept(ModItems.LIDER_CROWN.get());
 
-                                // =====================================================
-                                // CLAN TAKA
-                                // =====================================================
+                                // Clan Taka
                                 output.accept(ModItems.CLAN_TAKA.get());
                                 output.accept(ModItems.CLAN_TAKA_S1.get());
                                 output.accept(ModItems.CLAN_TAKA_S2.get());
+                                output.accept(ModItems.CLAN_TAKA_GORRA.get());
+                                output.accept(ModItems.CLAN_TAKA_ZAPATOS.get());
 
-                                // =====================================================
-                                // GUERREROS CELESTIALES DEL ABISMO
-                                // =====================================================
+                                // Guerreros Celestiales del Abismo
                                 output.accept(ModItems.CLAN_GUERREROS_CELESTIALES.get());
                                 output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_S1.get());
                                 output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_S2.get());
+                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_GORRA.get());
+                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_ZAPATOS.get());
 
-                                // =====================================================
-                                // CLAN TSUKI
-                                // =====================================================
+                                // Clan Tsuki
                                 output.accept(ModItems.CLAN_TSUKI.get());
                                 output.accept(ModItems.CLAN_TSUKI_S1.get());
                                 output.accept(ModItems.CLAN_TSUKI_S2.get());
+                                output.accept(ModItems.CLAN_TSUKI_GORRA.get());
+                                output.accept(ModItems.CLAN_TSUKI_ZAPATOS.get());
 
-                                // =====================================================
-                                // CLAN ARCANUM MISTERY
-                                // =====================================================
+                                // Clan Arcanum Mistery
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY.get());
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY_S1.get());
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY_S2.get());
-
-                                // Gorras
-                                output.accept(ModItems.CLAN_TAKA_GORRA.get());
-                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_GORRA.get());
-                                output.accept(ModItems.CLAN_TSUKI_GORRA.get());
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY_GORRA.get());
-
-                                // Zapatos
-                                output.accept(ModItems.CLAN_TAKA_ZAPATOS.get());
-                                output.accept(ModItems.CLAN_GUERREROS_CELESTIALES_ZAPATOS.get());
-                                output.accept(ModItems.CLAN_TSUKI_ZAPATOS.get());
                                 output.accept(ModItems.CLAN_ARCANUM_MISTERY_ZAPATOS.get());
+
+                                // Gimnasios
+                                output.accept(ModItems.GYM_FUEGO.get());
+                                output.accept(ModItems.GYM_FUEGO_ZAPATOS.get());
+                                output.accept(ModItems.GYM_ELECTRICO.get());
+                                output.accept(ModItems.GYM_ELECTRICO_ZAPATOS.get());
+                                output.accept(ModItems.GYM_FANTASMA.get());
+                                output.accept(ModItems.GYM_FANTASMA_ZAPATOS.get());
+                                output.accept(ModItems.GYM_HADA.get());
+                                output.accept(ModItems.GYM_HADA_ZAPATOS.get());
+                                output.accept(ModItems.GYM_HIELO.get());
+                                output.accept(ModItems.GYM_HIELO_ZAPATOS.get());
+                                output.accept(ModItems.GYM_PLANTA.get());
+                                output.accept(ModItems.GYM_PLANTA_ZAPATOS.get());
+                                output.accept(ModItems.GYM_SINIESTRO.get());
+                                output.accept(ModItems.GYM_SINIESTRO_ZAPATOS.get());
+                                output.accept(ModItems.GYM_DRAGON.get());
+                                output.accept(ModItems.GYM_DRAGON_ZAPATOS.get());
                             })
                             .build()
             );

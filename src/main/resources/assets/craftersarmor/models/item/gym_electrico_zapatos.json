@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "craftersarmor:item/gym_electrico_zapatos_icon"
+  }
+}

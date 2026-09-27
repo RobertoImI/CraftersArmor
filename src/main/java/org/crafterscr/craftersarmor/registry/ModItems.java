@@ -357,6 +357,187 @@ public final class ModItems {
                     )
             );
 
+
+    // =========================================================
+    // GIMNASIOS
+    // =========================================================
+
+    public static final DeferredItem<ClanCoatItem> GYM_FUEGO =
+            ITEMS.register(
+                    "gym_fuego",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_fuego"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_FUEGO_ZAPATOS =
+            ITEMS.register(
+                    "gym_fuego_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_fuego_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_ELECTRICO =
+            ITEMS.register(
+                    "gym_electrico",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_electrico"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_ELECTRICO_ZAPATOS =
+            ITEMS.register(
+                    "gym_electrico_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_electrico_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_FANTASMA =
+            ITEMS.register(
+                    "gym_fantasma",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_fantasma"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_FANTASMA_ZAPATOS =
+            ITEMS.register(
+                    "gym_fantasma_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_fantasma_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_HADA =
+            ITEMS.register(
+                    "gym_hada",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_hada"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_HADA_ZAPATOS =
+            ITEMS.register(
+                    "gym_hada_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_hada_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_HIELO =
+            ITEMS.register(
+                    "gym_hielo",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_hielo"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_HIELO_ZAPATOS =
+            ITEMS.register(
+                    "gym_hielo_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_hielo_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_PLANTA =
+            ITEMS.register(
+                    "gym_planta",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_planta"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_PLANTA_ZAPATOS =
+            ITEMS.register(
+                    "gym_planta_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_planta_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_SINIESTRO =
+            ITEMS.register(
+                    "gym_siniestro",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_siniestro"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_SINIESTRO_ZAPATOS =
+            ITEMS.register(
+                    "gym_siniestro_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_siniestro_zapatos"
+                    )
+            );
+
+    public static final DeferredItem<ClanCoatItem> GYM_DRAGON =
+            ITEMS.register(
+                    "gym_dragon",
+                    () -> new ClanCoatItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.CHESTPLATE,
+                            new Item.Properties().stacksTo(1),
+                            "gym_dragon"
+                    )
+            );
+
+    public static final DeferredItem<ClanShoesItem> GYM_DRAGON_ZAPATOS =
+            ITEMS.register(
+                    "gym_dragon_zapatos",
+                    () -> new ClanShoesItem(
+                            ArmorMaterials.NETHERITE,
+                            ArmorItem.Type.BOOTS,
+                            new Item.Properties().stacksTo(1),
+                            "gym_dragon_zapatos"
+                    )
+            );
+
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
