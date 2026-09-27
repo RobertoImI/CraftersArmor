@@ -11,8 +11,10 @@ import software.bernie.geckolib.renderer.GeoItemRenderer;
 public final class PokemonHatItemRenderer
         extends GeoItemRenderer<PokemonHatItem> {
 
-    public PokemonHatItemRenderer() {
+    public PokemonHatItemRenderer(PokemonHatItem item) {
         super(new PokemonHatItemModel());
+
+        withScale(item.getInventoryScale());
         useAlternateGuiLighting();
     }
 
