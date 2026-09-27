@@ -53,7 +53,7 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
      * without modifying the source geo model.</p>
      */
     private static final float EMOTE_ARM_INSET_PIXELS = 0.35F;
-    private static final float EMOTE_ARM_BACK_OFFSET_PIXELS = 0.45F;
+    private static final float VANILLA_ARM_HEIGHT = 12.0F / PIXELS_PER_BLOCK;
 
     private final Map<GeoBone, BendBounds> bendBoundsCache =
             new WeakHashMap<>();
@@ -88,20 +88,12 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
                     this.rightArm.getPosX()
                             + EMOTE_ARM_INSET_PIXELS
             );
-            this.rightArm.setPosZ(
-                    this.rightArm.getPosZ()
-                            + EMOTE_ARM_BACK_OFFSET_PIXELS
-            );
         }
 
         if (this.leftArm != null) {
             this.leftArm.setPosX(
                     this.leftArm.getPosX()
                             - EMOTE_ARM_INSET_PIXELS
-            );
-            this.leftArm.setPosZ(
-                    this.leftArm.getPosZ()
-                            + EMOTE_ARM_BACK_OFFSET_PIXELS
             );
         }
     }
@@ -258,24 +250,22 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         }
 
         if ("armorRightArm".equals(name)) {
-            return createBoundedContext(
+            return createArmBendContext(
                     bone,
                     PlayerAnimatorCompat.getBend(
                             this.currentEntity,
                             "rightArm"
-                    ),
-                    Direction.UP
+                    )
             );
         }
 
         if ("armorLeftArm".equals(name)) {
-            return createBoundedContext(
+            return createArmBendContext(
                     bone,
                     PlayerAnimatorCompat.getBend(
                             this.currentEntity,
                             "leftArm"
-                    ),
-                    Direction.UP
+                    )
             );
         }
 
@@ -334,6 +324,63 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         }
 
         return null;
+    }
+
+    /**
+     * Player Animator / Bendy-lib bends the vanilla arm using its full
+     * 4x12x4 cuboid. CraftersArmor's visible coat sleeve is intentionally
+     * shorter (about 10.25 px), so using the sleeve's own bounds places its
+     * bend center too high and makes the player arm poke through during strong
+     * emotes.
+     *
+     * <p>Keep the actual sleeve vertices and thickness unchanged, but calculate
+     * their deformation from a virtual 12 px-high arm frame. This makes the
+     * sleeve and the underlying vanilla arm share the same elbow center and
+     * bend radius.</p>
+     */
+    private BendContext createArmBendContext(
+            GeoBone bone,
+            PlayerAnimatorCompat.Bend bend
+    ) {
+        if (!bend.isActive()) {
+            return null;
+        }
+
+        BendBounds sleeveBounds = findPrimaryCubeBounds(bone);
+
+        if (sleeveBounds == null) {
+            return null;
+        }
+
+        BendBounds vanillaArmBounds =
+                createVirtualVanillaArmBounds(sleeveBounds);
+
+        return new BendContext(
+                bend,
+                Direction.UP,
+                vanillaArmBounds
+        );
+    }
+
+    private static BendBounds createVirtualVanillaArmBounds(
+            BendBounds sleeveBounds
+    ) {
+        /*
+         * In the GeoArmorRenderer model space used by geoToVanillaRaw(),
+         * the classic/slim vanilla arm runs from Y=0 to Y=12 px.
+         *
+         * X/Z only need to preserve the sleeve's center because Bendy-lib's
+         * Direction.UP bend uses Y for the base/other planes. Keeping the
+         * sleeve center also preserves the coat's slightly inflated width.
+         */
+        return new BendBounds(
+                sleeveBounds.minX(),
+                0.0F,
+                sleeveBounds.minZ(),
+                sleeveBounds.maxX(),
+                VANILLA_ARM_HEIGHT,
+                sleeveBounds.maxZ()
+        );
     }
 
     private BendContext createBoundedContext(
