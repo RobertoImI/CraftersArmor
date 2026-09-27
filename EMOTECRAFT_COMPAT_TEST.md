@@ -1,28 +1,47 @@
 # Emotecraft compatibility test branch
 
-This branch is an experimental compatibility layer for **CraftersArmor + Emotecraft / Player Animator** on Minecraft 1.21.1.
+This branch tests **CraftersArmor + Emotecraft / Player Animator** on Minecraft 1.21.1 without splitting the visible armor into rigid pieces.
 
-## What this patch changes
+## Current approach
 
-- Keeps Emotecraft and Player Animator optional. CraftersArmor still loads without them.
-- Keeps GeckoLib's normal head/body/limb pose synchronization.
-- Reads the active Player Animator bend used by Emotecraft.
-- Adds articulated lower-arm bones to both coat models.
-- Adds articulated lower-leg bones to the shoes model.
-- Preserves the existing coat textures by splitting only the sleeve geometry and mapping the original UV region onto the two segments.
-- Does not change the hat or crown geometry because the head does not use Bendy-lib limb bending; GeckoLib already follows the animated head rotation.
+- The coat and shoe geo models are restored to the exact geometry from master.
+- No forearm or lower-leg bones are added.
+- During an active bend only, the renderer subdivides the original GeckoLib faces for that frame.
+- Those temporary vertices are deformed using Bendy-lib-style bend math.
+- The original UV layout is interpolated across the temporary vertices, so no texture remap is required.
+- Arm bends deform the original sleeve itself.
+- Leg bends move/deform the original shoes around the normal humanoid knee.
+- Torso/body bends deform the coat body.
+- Head and arms receive Player Animator's body-bend matrix, which GeoArmorRenderer normally misses.
+- Animated ModelPart scale is copied to the GeckoLib head/body/arms/legs.
+- Clan hats and the leader crown now use the same compatibility renderer.
+- Emotecraft / Player Animator is still optional and is accessed through reflection.
 
-## Suggested test
+## What to test
 
-Use the current CraftersArmor dependencies plus an Emotecraft build for Minecraft 1.21.1.
+1. First launch without playing an emote. All armor should look exactly like master.
+2. Test clan coat and leader coat with:
+   - strong elbow bend,
+   - crossed arms,
+   - arm raised above the head,
+   - sideways elbow bend.
+3. Test shoes with:
+   - kneeling,
+   - sitting,
+   - one leg raised,
+   - strong knee bend.
+4. Test every clan hat and the leader crown with:
+   - torso bent forward,
+   - torso bent backward,
+   - head looking/rotating strongly,
+   - emotes that move both torso and head.
+5. Watch especially for:
+   - hat/crown separation,
+   - wrong bend direction,
+   - sleeve texture stretching,
+   - lighting seams,
+   - shoes bending around the wrong point.
 
-1. Equip a normal clan coat and shoes.
-2. Run emotes with strong elbow bends in several directions.
-3. Check both arms in first and third person.
-4. Run emotes with crouching/kneeling poses and check both shoes.
-5. Repeat with the leader coat.
-6. Test normal walking, sprinting, sneaking and no emote to confirm the appearance is unchanged.
+## Important
 
-## Current experimental limitation
-
-Player Animator/Bendy-lib can deform a vanilla cuboid continuously. GeckoLib does not expose that same Bendy-lib cuboid mutator, so this patch reproduces the bend as an articulated lower limb. It should follow elbows and knees much better than the unpatched renderer, but extreme bends may still show a small seam at the joint.
+This version intentionally does **not** solve bends by visually cutting the sleeve in two. The source sleeve remains one GeckoLib cube/model piece; the bend exists only as render-time vertex deformation.
