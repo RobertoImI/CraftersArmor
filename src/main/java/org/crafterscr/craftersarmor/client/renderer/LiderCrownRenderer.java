@@ -6,10 +6,9 @@ import org.crafterscr.craftersarmor.CraftersArmor;
 import org.crafterscr.craftersarmor.item.LiderCrownItem;
 
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public final class LiderCrownRenderer
-        extends GeoArmorRenderer<LiderCrownItem> {
+        extends EmoteCompatibleArmorRenderer<LiderCrownItem> {
 
     public LiderCrownRenderer() {
         super(new LiderCrownModel());
