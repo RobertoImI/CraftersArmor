@@ -43,6 +43,37 @@ public final class PokemonHatItem extends ArmorItem implements GeoItem {
         return this.assetName;
     }
 
+    /**
+     * The source Pokémon headwear models were exported at different scales.
+     * These values normalize the part that actually sits around the player's
+     * head to roughly the same 8-9 px footprint as the existing CraftersArmor
+     * caps, while keeping each model's brim/tail proportions intact.
+     */
+    public float getWearScale() {
+        return switch (this.assetName) {
+            case "hatblack" -> 0.71F;
+            case "hathilbert" -> 1.31F;
+            case "hatmay" -> 1.21F;
+            case "hatserena" -> 1.42F;
+            default -> 1.0F;
+        };
+    }
+
+    /**
+     * Independent inventory scale. This is intentionally not the same as the
+     * equipped scale because the full silhouette of every hat has a different
+     * width/depth (brims, bandana tail, etc.).
+     */
+    public float getInventoryScale() {
+        return switch (this.assetName) {
+            case "hatblack" -> 0.68F;
+            case "hathilbert" -> 1.23F;
+            case "hatmay" -> 1.10F;
+            case "hatserena" -> 1.28F;
+            default -> 1.0F;
+        };
+    }
+
     @Override
     public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
         consumer.accept(new GeoRenderProvider() {
@@ -53,7 +84,8 @@ public final class PokemonHatItem extends ArmorItem implements GeoItem {
             @Override
             public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {
                 if (this.itemRenderer == null) {
-                    this.itemRenderer = new PokemonHatItemRenderer();
+                    this.itemRenderer =
+                            new PokemonHatItemRenderer(PokemonHatItem.this);
                 }
 
                 return this.itemRenderer;
