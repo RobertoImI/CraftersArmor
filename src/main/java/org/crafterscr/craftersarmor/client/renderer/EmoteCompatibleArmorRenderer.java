@@ -53,7 +53,7 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
      * without modifying the source geo model.</p>
      */
     private static final float EMOTE_ARM_INSET_PIXELS = 0.35F;
-    private static final float BASE_ARM_BACK_OFFSET_PIXELS = 0.45F;
+    private static final float EMOTE_ARM_BACK_OFFSET_PIXELS = 0.45F;
 
     private final Map<GeoBone, BendBounds> bendBoundsCache =
             new WeakHashMap<>();
@@ -77,26 +77,8 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
         copyScale(baseModel.rightLeg, this.rightBoot);
         copyScale(baseModel.leftLeg, this.leftBoot);
 
-        applyBaseSleeveBackAlignment();
-
         if (PlayerAnimatorCompat.isActive(this.currentEntity)) {
             applyEmoteSleeveAlignment();
-        }
-    }
-
-    private void applyBaseSleeveBackAlignment() {
-        if (this.rightArm != null) {
-            this.rightArm.setPosZ(
-                    this.rightArm.getPosZ()
-                            + BASE_ARM_BACK_OFFSET_PIXELS
-            );
-        }
-
-        if (this.leftArm != null) {
-            this.leftArm.setPosZ(
-                    this.leftArm.getPosZ()
-                            + BASE_ARM_BACK_OFFSET_PIXELS
-            );
         }
     }
 
@@ -106,12 +88,20 @@ public abstract class EmoteCompatibleArmorRenderer<T extends Item & GeoItem>
                     this.rightArm.getPosX()
                             + EMOTE_ARM_INSET_PIXELS
             );
+            this.rightArm.setPosZ(
+                    this.rightArm.getPosZ()
+                            + EMOTE_ARM_BACK_OFFSET_PIXELS
+            );
         }
 
         if (this.leftArm != null) {
             this.leftArm.setPosX(
                     this.leftArm.getPosX()
                             - EMOTE_ARM_INSET_PIXELS
+            );
+            this.leftArm.setPosZ(
+                    this.leftArm.getPosZ()
+                            + EMOTE_ARM_BACK_OFFSET_PIXELS
             );
         }
     }
