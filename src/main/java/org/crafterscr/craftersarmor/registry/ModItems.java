@@ -17,7 +17,6 @@ import org.crafterscr.craftersarmor.item.ClanHatItem;
 import org.crafterscr.craftersarmor.item.LiderCrownItem;
 
 import org.crafterscr.craftersarmor.item.ClanShoesItem;
-import org.crafterscr.craftersarmor.item.PokemonHatItem;
 
 public final class ModItems {
 
@@ -547,54 +546,6 @@ public final class ModItems {
                             ArmorItem.Type.BOOTS,
                             new Item.Properties().stacksTo(1),
                             "gym_dragon_zapatos"
-                    )
-            );
-
-    // =========================================================
-    // ACCESORIOS DE CABEZA - POKÉMON
-    // =========================================================
-
-    public static final DeferredItem<PokemonHatItem> HAT_BLACK =
-            ITEMS.register(
-                    "hatblack",
-                    () -> new PokemonHatItem(
-                            ArmorMaterials.NETHERITE,
-                            ArmorItem.Type.HELMET,
-                            new Item.Properties().stacksTo(1),
-                            "hatblack"
-                    )
-            );
-
-    public static final DeferredItem<PokemonHatItem> HAT_HILBERT =
-            ITEMS.register(
-                    "hathilbert",
-                    () -> new PokemonHatItem(
-                            ArmorMaterials.NETHERITE,
-                            ArmorItem.Type.HELMET,
-                            new Item.Properties().stacksTo(1),
-                            "hathilbert"
-                    )
-            );
-
-    public static final DeferredItem<PokemonHatItem> HAT_MAY =
-            ITEMS.register(
-                    "hatmay",
-                    () -> new PokemonHatItem(
-                            ArmorMaterials.NETHERITE,
-                            ArmorItem.Type.HELMET,
-                            new Item.Properties().stacksTo(1),
-                            "hatmay"
-                    )
-            );
-
-    public static final DeferredItem<PokemonHatItem> HAT_SERENA =
-            ITEMS.register(
-                    "hatserena",
-                    () -> new PokemonHatItem(
-                            ArmorMaterials.NETHERITE,
-                            ArmorItem.Type.HELMET,
-                            new Item.Properties().stacksTo(1),
-                            "hatserena"
                     )
             );
 
