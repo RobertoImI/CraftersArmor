@@ -10,6 +10,10 @@ import software.bernie.geckolib.model.GeoModel;
 public final class PokemonHatArmorRenderer
         extends EmoteCompatibleArmorRenderer<PokemonHatItem> {
 
+    public PokemonHatArmorRenderer() {
+        super(new PokemonHatArmorModel());
+    }
+
     private static final class PokemonHatArmorModel
             extends GeoModel<PokemonHatItem> {
 
